@@ -1,0 +1,99 @@
+.outer {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.h1 {
+    margin: 0;
+    color: white;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    background-color: green;
+}
+
+.p {
+    color: red;
+    margin-top: 5px;
+}
+
+.home {
+    height: 40px;
+    width: 75px;
+    margin-top: 10px;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    border: none;
+    text-decoration: none;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 300px;
+}
+
+.container h2 {
+    text-align: center;
+    color: #333;
+}
+
+.formgroup {
+    margin-bottom: 20px;
+}
+
+.formgroup label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.formgroup input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.loginacc {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.form {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.loginacc Link {
+    color: #333;
+}
+
+.btncontainer {
+    text-align: center;
+}
+
+.btncontainer button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
