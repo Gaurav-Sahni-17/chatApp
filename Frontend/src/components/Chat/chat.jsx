@@ -34,22 +34,37 @@ export default function Chat() {
         }
     }, [])
     useEffect(()=>{
+        console.log(user);
         if(user.username){
-            fetch("http://localhost:3000/getusergroups")
+            fetch("http://localhost:3000/getusergroups",{
+                method:"POST",
+                headers:{
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({id:user.id})
+            }).then((res)=>{
+                return res.json();
+            })
             .then((data)=>{
+                console.log(data);
                 if(data.length>0){
                     setGroups(data);
                     setSelectedGroup(data[0].group_name);
-                    getGroupChats({id:data[0].id,start:start})
-                    .then((data)=>{
-                           setGroupMsg(data);
-                    }).catch((err)=>{
-                        swal.fire({
-                            title:err,
-                            icon:"error"
-                        })
-                    })
+                    // getGroupChats({id:data[0].id,start:start})
+                    // .then((data)=>{
+                    //       setGroupMsg(data);
+                    // }).catch((err)=>{
+                    //     swal.fire({
+                    //         title:err,
+                    //         icon:"error"
+                    //     })
+                    // })
                 }
+            }).catch(()=>{
+                swal.fire({
+                    title:"Something Went Wrong",
+                    icon:"error"
+                })
             })
         }
     },[user.username])
@@ -146,13 +161,18 @@ export default function Chat() {
             <h2 className={styles.form_head}>Welcome To Our Chatting Application</h2>
             <div className={styles.outer}>
                 <ul className={styles.left}>
+                        <li onClick={getGroupData}>
+                        <h2>Groups</h2>
+                    </li>
                     {
                        groups.length>0?
                        groups.forEach((element)=>{
-                        <li onClick={getGroupData}>
+                      return(
+                      <li>
                             <h3>{element.group_name}</h3>
                             <p>{element.description}</p>
                         </li>
+                      )
                        })
                        :
                        <h3 className={styles.nodata}>Nothing to show</h3>

@@ -20,4 +20,16 @@ function creategroup(req, res) {
         }
     })
 }
-module.exports={creategroup}
+
+
+function getusergroups(req,res){
+    const {id}=req.body;
+    console.log(id);
+    db.query("Select * from groupdetails where group_id in (Select group_id from members where user_id=?)",[id],(err,result)=>{
+        if(!err){
+            console.log(result);
+            res.send(JSON.stringify(result));
+        }
+    })
+}
+module.exports={creategroup,getusergroups}

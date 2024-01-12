@@ -7,7 +7,7 @@ const db = require("./dbmethods/db.js")
 const { postchangepass, postforgot } = require("./controllers/passwordmanagement.js");
 const { getallusers, postsignup, postlogin } = require("./controllers/user.js");
 const { verifymail, verifyorder, checkuser } = require("./controllers/verification.js")
-const {creategroup}=require('./controllers/group.js')
+const {creategroup,getusergroups}=require('./controllers/group.js')
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -42,6 +42,8 @@ app.post("/forgot", postforgot);
 app.get("/getallusers", getallusers);
 
 app.post("/creategroup",creategroup);
+
+app.post("/getusergroups",getusergroups);
 
 db.connect((err) => {
     if (err) {

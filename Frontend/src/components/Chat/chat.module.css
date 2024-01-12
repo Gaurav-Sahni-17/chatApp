@@ -56,6 +56,9 @@
 .left{
     display: grid;
     height:100vh;
-    grid-auto-rows: 10fr;
+    grid-auto-rows: 1fr;
     overflow:auto;
 }
+.left::-webkit-scrollbar {
+    display: none;
+  }
