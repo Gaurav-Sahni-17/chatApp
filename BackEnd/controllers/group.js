@@ -1,6 +1,4 @@
-const { JsonWebTokenError } = require('jsonwebtoken');
 const db = require('../dbmethods/db.js');
-const sendMail = require("../mailmethods/sendEmail.js");
 function creategroup(req, res) {
     const {groupname,description,userId}=req.body;
     const id=Date.now();
@@ -24,12 +22,25 @@ function creategroup(req, res) {
 
 function getusergroups(req,res){
     const {id}=req.body;
-    console.log(id);
-    db.query("Select * from groupdetails where group_id in (Select group_id from members where user_id=?)",[id],(err,result)=>{
+    db.query("Select group_id,group_name,description from groupdetails where group_id in (Select group_id from members where user_id=?)",[id],(err,result)=>{
         if(!err){
-            console.log(result);
             res.send(JSON.stringify(result));
         }
     })
 }
-module.exports={creategroup,getusergroups}
+
+function join(req,res){
+    const {groupId,userId}=req.params;
+    db.query("Insert into members values (?,?)",[groupId,userId],(err,result)=>{
+        if(err){
+            res.send("<h1>Error Occured</h1>"); 
+        }
+        if(result.affectedRows){
+            res.redirect("http://localhost:5173");
+        }
+        else{
+            res.send("<h1>Error Occured</h1>");
+        }
+    })
+}
+module.exports={creategroup,getusergroups,join}

@@ -1,16 +1,15 @@
-export default function signupuser(data) {
+export default function sendMessage(data) {
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:3000/signup", {
+        fetch("http://localhost:3000/sendmessage", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: { token: data.token, 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         }).then((res) => {
             if (res.status === 200) {
                 resolve();
-                return;
             }
-            else {
-                reject("Email Already Exists");
+            else{
+                reject("Something Went Wrong");
             }
         }).catch((err) => {
             reject("Something Went Wrong");

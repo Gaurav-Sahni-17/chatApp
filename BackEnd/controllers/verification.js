@@ -26,7 +26,7 @@ function verifymail(req,res){
  }
 
  function checkuser(req,res){
-    db.query("Select * from user where email=?",req.userId,(err,result)=>{
+    db.query("Select username,id,email from user where email=?",req.userId,(err,result)=>{
         res.end(JSON.stringify(result[0]));
     })
 }

@@ -7,11 +7,9 @@ export default function changepass(data) {
         }).then((res) => {
             if (res.status === 200) {
                 resolve();
-                return;
             }
         }).catch((err) => {
             reject("Something Went Wrong");
-            return;
         })
     })
 }

@@ -1,20 +1,26 @@
 const jwt = require("jsonwebtoken");
 const db = require('../dbmethods/db.js');
+const bcrypt=require('bcrypt');
+const saltRounds=10;
 const sendMail = require("../mailmethods/sendEmail.js");
-function getallusers(req, res) {
-    db.query("Select * from user", (err, result) => {
+async function getusers(req, res) {
+    const {id}=req.body;
+    db.query("Select id,username,email from user where isverified=? and id not in (Select user_id from members where group_id=?)",[1,id], (err, result) => {
         res.end(JSON.stringify(result));
     })
 }
 function postsignup(req, res) {
     id = Date.now();
     const {email,region,username,password}=req.body;
-    db.query("Select * from user where email=?", [email], (err, result, fields) => {
+    db.query("Select id from user where email=?", [email], async(err, result) => {
         if (result.length) {
             res.status(400).end();
         }
         else {
-            db.query("Insert into user (username,email,password,id,region) values (?,?,?,?,?)", [username,email,password,id,region], (err, result, fields) => {
+            const salt = await bcrypt.genSalt(saltRounds);
+            const hash = await bcrypt.hash(password, salt);
+             const encpassword=hash;
+            db.query("Insert into user (username,email,password,id,region) values (?,?,?,?,?)", [username,email,encpassword,id,region], (err, result, fields) => {
                 if (result.affectedRows) {
                     let token =id;
                     let text = 'Enjoy chatting with our application with your friends and family.';
@@ -32,24 +38,51 @@ function postsignup(req, res) {
 }
 
 
-function postlogin(req, res) {
-    db.query("Select * from user where email=? and password=?", [req.body.email, req.body.password], (err, result) => {
-        if (result.length) {
-            id = result[0].email;
-            const token = jwt.sign({ id }, "jwtSecret");
+async function postlogin(req, res) {
+    const {email,password}=req.body;
+    db.query("Select email,id,isverified,password from user where email=?", [email],async (err, result) => {
+        if(err){
+            res.status(403).end();
+        }
+        else{
+        if (result.length>0) {
             user = result[0];
-            if (user.isverified) {
+            if(user.isverified){
+             const id = user.email;
+            const pass=user.password;
+            const passwordverify=await bcrypt.compare(password,pass);
+            if(passwordverify){
+            const token = jwt.sign({ id }, "MySecretKey");
                res.status(200).send(JSON.stringify(token));
             }
             else {
-                res.status(401).end();
+                res.status(402).end();
             }
         }
-        else {
-            res.status(402).end;
+        else{
+            res.status(401).end();
         }
+        }
+        else {
+            res.status(402).end();
+        }
+    }
     })
 }
 
+function invitefriend(req,res){
+    const {userId,groupId,email,username}=req.body;
+    let text = 'Enjoy chatting with our application with your friends and family.';
+                    let subject = 'Invitation';
+                    let html = `<h1>${username} has invited you to join his chatting group.</h1><h3>Click below to join</h3><a href='http://127.0.0.1:3000/join/${groupId}/${userId}'>Click Here</a>`;
+                    sendMail(email, subject, text, html, function (err, data) {
+                        if (!err) {
+                            res.status(200).end();
+                        }
+                        else{
+                            res.status(400).end();
+                        }
+})
+}
 
-module.exports = { getallusers, postsignup, postlogin }
+module.exports = { getusers, postsignup, postlogin ,invitefriend}

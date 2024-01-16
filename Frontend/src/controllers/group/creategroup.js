@@ -15,7 +15,6 @@ export default function createGroup(data) {
                 resolve(data);
         }).catch((err) => {
             reject("Something Went Wrong");
-            return;
         })
     })
 }

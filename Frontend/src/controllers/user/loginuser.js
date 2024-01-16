@@ -5,22 +5,22 @@ export default function loginuser(data) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         }).then((res) => {
+            console.log(res);
             if(res.status==200){
                 return res.json();
             }
         else if (res.status == 401) {
                 resolve("mailverify");
             }
-            else {
+            else if(res.status==402){
                 reject("Invalid username and password");
-                return;
             }
         }).then((data)=>{
             localStorage.setItem("token",data);
             resolve("login");
         }).catch((err) => {
             reject("Something Went Wrong");
-            return;
+            
         })
     })
 }

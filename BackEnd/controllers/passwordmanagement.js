@@ -1,10 +1,15 @@
 const sendMail = require("../mailmethods/sendEmail.js");
 const db = require('../dbmethods/db.js');
+const bcrypt=require('bcrypt');
+const saltRounds=10;
 const jwt = require("jsonwebtoken");
-function postchangepass(req, res) {
+async function postchangepass(req, res) {
     const { password } = req.body;
     const id = req.userId;
-    db.query("Update user set password=? where email=?", [password, id], (err, result) => {
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(password, salt);
+     const encpassword=hash;
+    db.query("Update user set password=? where email=?", [encpassword, id], (err, result) => {
         if (result.affectedRows) {
             let text = 'password changed';
             let subject = 'Password changed';
