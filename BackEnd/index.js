@@ -4,10 +4,11 @@ const cookiParser=require("cookie-parser")
 const jwt = require('jsonwebtoken');
 const db = require("./dbmethods/db.js")
 const { postchangepass, postforgot } = require("./controllers/passwordmanagement.js");
-const { getusers, postsignup, postlogin,invitefriend } = require("./controllers/user.js");
+const { getusers, postsignup, postlogin,invitefriend, topusers } = require("./controllers/user.js");
 const { verifymail, verifyorder, checkuser } = require("./controllers/verification.js")
-const {creategroup,getusergroups,join}=require('./controllers/group.js')
+const {creategroup,getusergroups,join, topgroups}=require('./controllers/group.js')
 const {sendMessage, getGroupChats}=require('./controllers/message.js');
+const { topregions } = require('./controllers/region.js');
 const app = express();
 app.use(express.json())
 app.use(cookiParser());
@@ -53,6 +54,12 @@ app.post("/getusergroups",getusergroups);
 app.post("/sendmessage",sendMessage);
 
 app.post("/getgroupchats",getGroupChats);
+
+app.post("/topgroups",topgroups);
+
+app.post("/topusers",topusers);
+
+app.post("/topregions",topregions);
 
 db.connect((err) => {
     if (err) {

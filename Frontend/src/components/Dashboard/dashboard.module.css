@@ -1,0 +1,91 @@
+.head {
+    padding: 1.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: green;
+}
+
+.heading {
+    color: white;
+    font-size: 2.5 rem;
+    text-decoration: underline;
+}
+
+.form_head {
+    width: auto;
+    text-align: center;
+    margin: 1%;
+    font-size: 2rem;
+    text-decoration: underline;
+}
+.dropdown {
+    display: inline-block;
+    margin-right: 8%;
+}
+.dropdown_content {
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.dropdown_content li {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.dropbtn {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.dropdown_content li:hover {
+    background-color: #ddd;
+}
+.cell {
+    border: 1px solid rgb(144, 222, 245);
+    padding: 5px;
+    text-align: center;
+}
+.height {
+    height: 40%;
+    padding: 15px;
+}
+
+.caption {
+    font-weight: bold;
+    font-size: 30px;
+    color: green
+}
+
+.back {
+    background-color: white;
+    width: 80%;
+    margin-left: 170px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-collapse: collapse;
+}
+.back2{
+    margin-top:20px;
+}
+.cell input{
+    width:80%;
+    height:80%;
+    padding: 2px;
+    font-size:1rem;
+}
+.cell button{
+    padding:5px;
+    background-color: blue;
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius: 20px;
+}

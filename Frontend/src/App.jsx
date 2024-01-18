@@ -8,7 +8,8 @@ import Changepass from "./components/Changepass/changepass";
 import Forgot from "./components/Forgot/forgot"
 import CheckMail from "./components/checkMail/checkMail"
 import Chat from "./components/Chat/chat";
-import Invite from "./components/Invite/invite"
+import Invite from "./components/Invite/invite";
+import Dashboard from "./components/Dashboard/dashboard"
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/checkmail" element={<CheckMail />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/invite/:id" element={<Invite/>}/>
+        <Route path="/dashboard" element={<Dashboard/>}/>
       </Route>
     )
   );

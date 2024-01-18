@@ -2,20 +2,20 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import styles from "./chat.module.css"
 import { AiOutlineMenu } from 'react-icons/ai';
-import { RiSearchLine } from 'react-icons/ri';
+// import { RiSearchLine } from 'react-icons/ri';
 import swal from "sweetalert2"
 import createGroup from "../../controllers/group/createGroup.js";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import InfiniteScroll from "react-infinite-scroll-component";
+import Highlighter from "react-highlight-words";
 import sendMessage from "../../controllers/group/sendMessage.js";
 import getGroupChats from "../../controllers/group/getgroupchats.js";
 import Logout from "../../controllers/logout/logout.js"
-import { set } from "mongoose";
 export default function Chat() {
     const [user, Setuser] = useState({});
     const [open, setOpen] = useState(false);
     const [groups, setGroups] = useState([]);
     const [searchValue, setSearchValue] = useState("");
-    const [hasMessages,setHasMessages]=useState(true);
+    const [hasMessages, setHasMessages] = useState(true);
     const [start, setStart] = useState(0);
     const [HasMore, setHasMore] = useState(true);
     const [selectedGroup, setSelectedGroup] = useState({});
@@ -57,7 +57,7 @@ export default function Chat() {
                         groupChat(data[0])();
                         setGroups(data);
                     }
-                    else{
+                    else {
                         setHasMessages(false);
                     }
                 }).catch(() => {
@@ -71,43 +71,51 @@ export default function Chat() {
     function handleOpen() {
         setOpen(!open);
     }
-    function fetchMoreData() {
-            console.log(start);
-            getGroupChats({ groupId: selectedGroup.group_id, start: start })
-            .then((data) => {
-                if(data.length<10){
-                    setHasMore(false);   
-                }
-                else{
-                    setStart(start+10);
-                }
-                setGroupMsg([...groupMsg,...data]);
-            }).catch((err) => {
-                swal.fire({
-                    title: err,
-                    icon: "error"
+    function fetchMoreData(e) {
+        let a = e.target.scrollHeight, b = e.target.clientHeight;
+        console.log(a, b);
+        if ((-(e.target.scrollTop.toFixed()) === (a - b)) && HasMore) {
+            getGroupChats({ groupId: selectedGroup.group_id, start: start, count: 5 })
+                .then((data) => {
+                    console.log(data);
+                    if (data.length == 0) {
+                        setHasMore(false);
+                    }
+                    else {
+                        setStart(start + 5);
+                    }
+                    setGroupMsg([...groupMsg, ...data]);
+                    e.target.scrollTo({
+                        top: -((a - b).toFixed()),
+                        behaviour: "smooth"
+                    })
+                }).catch((err) => {
+                    swal.fire({
+                        title: err,
+                        icon: "error"
+                    })
                 })
-            })
-            }
+        }
+    }
     function groupChat(element) {
-        return function(){
-        setHasMore(true);
-        getGroupChats({ groupId: element.group_id, start: 0 })
-            .then((data) => {
-                setSelectedGroup(element);
-                setGroupMsg(data);
-                if(data.length<10){
-                  setHasMore(false);   
-                }
-                else{
-                setStart(10);
-                }
-            }).catch((err) => {
-                swal.fire({
-                    title: err,
-                    icon: "error"
+        return function () {
+            setHasMore(true);
+            getGroupChats({ groupId: element.group_id, start: 0, count: 10 })
+                .then((data) => {
+                    if (data.length === 0) {
+                        setHasMore(false);
+                    }
+                    else {
+                        setStart(10);
+                    }
+                    setSelectedGroup(element);
+                    setGroupMsg(data);
+                }).catch((err) => {
+                    swal.fire({
+                        title: err,
+                        icon: "error"
+                    })
                 })
-            })
         }
     }
     function logoutUser() {
@@ -172,6 +180,9 @@ export default function Chat() {
     function invite() {
         navigate("/invite/" + selectedGroup.group_id);
     }
+    function dashboard() {
+        navigate("/dashboard");
+    }
     function sendMsg() {
         if (message.trim() !== "") {
             sendMessage({ userId: user.id, groupId: selectedGroup.group_id, content: message }).
@@ -186,7 +197,7 @@ export default function Chat() {
                         time: time
                     }
                     setMessage("");
-                    setGroupMsg([messagedata,messagedata]);
+                    setGroupMsg([messagedata, ...groupMsg]);
                 })
                 .catch((err) => {
                     swal.fire({
@@ -215,6 +226,7 @@ export default function Chat() {
                             <li onClick={logoutUser}>Logout</li>
                             <li onClick={changePassword}>Change Password</li>
                             <li onClick={create}>Create Group</li>
+                            <li onClick={dashboard}>View Dashboard</li>
                         </div>
                     ) : (
                         <div></div>
@@ -242,68 +254,74 @@ export default function Chat() {
                     }
                 </ul>
                 {
-                hasMessages ?
-                <div className={styles.right}>
-                    <div className={styles.right_header}>
-                        <h1 className={styles.groupName}>{selectedGroup.group_name}</h1>
-                        <div className={styles.searchContainer}>
-                            <div>
-                                <input type="text" className={styles.search} name="search" value={searchValue} onChange={changeSearchValue} placeholder="Search.."></input>
-                                <div className={styles.searchIcon}>
-                                    <RiSearchLine className="search-icon" />
+                    hasMessages ?
+                        <div className={styles.right}>
+                            <div className={styles.right_header}>
+                                <h1 className={styles.groupName}>{selectedGroup.group_name}</h1>
+                                <div className={styles.searchContainer}>
+                                    <div>
+                                        <input type="text" className={styles.search} name="search" value={searchValue} onChange={changeSearchValue} placeholder="Search.."></input>
+                                        {/* <div className={styles.searchIcon}>
+                                            <RiSearchLine className="search-icon" />
+                                        </div> */}
+                                    </div>
+                                </div>
+                                <div className={styles.inviteContainer}>
+                                    <button className={styles.invite} onClick={invite}>Invite Friends</button>
+                                </div>
+                            </div>
+                            <ul id="messageList" className={styles.rightList} onScroll={fetchMoreData}>
+                                {/* <InfiniteScroll
+                                    dataLength={groupMsg.length}
+                                    next={fetchMoreData}
+                                    hasMore={HasMore}
+                                    loader={<p>Loading...</p>}
+                                    endMessage={
+                                        <p style={{ textAlign: 'center' }}>
+                                            <b>Yay! You have seen it all</b>
+                                        </p>
+                                    }
+                                   scrollableTarget="messageList"
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "column-reverse",
+                                    }}
+                                > */}
+                                {
+                                    groupMsg.map((element) => {
+                                        return (
+                                            <li className={styles.listItem}>
+                                                <p className={styles.msgTime}>{element.date + "  " + element.time}</p>
+                                                {
+                                                    element.user_id === user.id ?
+                                                        <h3>You</h3> :
+                                                        <h3>{element.username}</h3>
+                                                }
+                                                {/* <p>{element.content}</p> */}
+                                                <Highlighter
+                                                    highlightClassName={styles.highlight}
+                                                    searchWords={[searchValue]}
+                                                    autoEscape={true}
+                                                    textToHighlight={element.content}
+                                                />
+                                            </li>
+                                        )
+                                    })
+                                }
+                                {/* </InfiniteScroll> */}
+                            </ul>
+                            <div className={styles.msgContainer}>
+                                <div className={styles.msgbox}>
+                                    <input type="text" value={message} placeholder="Enter Message" onChange={changeMessage} className={styles.messageInput}></input>
+                                </div>
+                                <div className={styles.sendContainer}>
+                                    <button className={styles.send} onClick={sendMsg}>Send</button>
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.inviteContainer}>
-                            <button className={styles.invite} onClick={invite}>Invite Friends</button>
-                        </div>
-                    </div>
-                    <ul id="messageList" className={styles.rightList}>
-                        <InfiniteScroll 
-                        dataLength={groupMsg.length}
-                         hasMore={HasMore}
-                          loader={<p>Loading...</p>}
-                           next={fetchMoreData}
-                           endMessage={
-                            <p style={{ textAlign: 'center' }}>
-                              <b>Yay! You have seen it all</b>
-                            </p>
-                          }
-                          scrollableTarget="messageList"
-                        style={{
-                            display:"flex",
-                            flexDirection:"column-reverse",
-                        }}
-                           >
-                            {
-                                groupMsg.map((element) => {
-                                    return (
-                                        <li className={styles.listItem}>
-                                            <p className={styles.msgTime}>{element.date + "  " + element.time}</p>
-                                            {
-                                                element.user_id === user.id ?
-                                                    <h3>You</h3> :
-                                                    <h3>{element.username}</h3>
-                                            }
-                                            <p>{element.content}</p>
-                                        </li>
-                                    )
-                                })
-                            }
-                        </InfiniteScroll>
-                    </ul>
-                    <div className={styles.msgContainer}>
-                        <div className={styles.msgbox}>
-                            <input type="text" value={message} placeholder="Enter Message" onChange={changeMessage} className={styles.messageInput}></input>
-                        </div>
-                        <div className={styles.sendContainer}>
-                            <button className={styles.send} onClick={sendMsg}>Send</button>
-                        </div>
-                    </div>
-                </div>
-                :
-                <div></div>
-                        }
+                        :
+                        <div></div>
+                }
             </div>
         </>
     )

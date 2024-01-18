@@ -1,178 +1,203 @@
 .head {
-    padding: 1.5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: green;
+  padding: 1.5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: green;
 }
 
 .heading {
-    color: white;
-    font-size: 2.5 rem;
-    text-decoration: underline;
+  color: white;
+  font-size: 2.5 rem;
+  text-decoration: underline;
 }
 
 .form_head {
-    width: auto;
-    text-align: center;
-    margin: 1%;
-    font-size: 2rem;
-    text-decoration: underline;
+  width: auto;
+  text-align: center;
+  margin: 1%;
+  font-size: 2rem;
+  text-decoration: underline;
 }
+
 .dropdown {
-    display: inline-block;
-    margin-right: 8%;
+  display: inline-block;
+  margin-right: 8%;
 }
-.groupName{
-    color:rgba(61, 59, 59, 0.944);
+
+.groupName {
+  color: rgba(61, 59, 59, 0.944);
 }
+
 .dropdown_content {
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 5px;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
 }
 
 .dropdown_content li {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    cursor: pointer;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
 }
 
 .dropbtn {
-    font-size: 1.2rem;
-    cursor: pointer;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .dropdown_content li:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
-.outer{
-    display: grid;
-    grid-template-columns: 20% 80%;
+
+.outer {
+  display: grid;
+  grid-template-columns: 20% 80%;
 }
-.left{
-    display: grid;
-    min-height:100vh;
-    grid-auto-rows: 0.1fr;
-    overflow:scroll;
-    background-color: rgb(182, 177, 177);
+
+.left {
+  display: grid;
+  min-height: 100vh;
+  grid-auto-rows: 0.1fr;
+  overflow: scroll;
+  background-color: rgb(182, 177, 177);
 }
-.left li{
-    cursor: pointer;
-    border-bottom: 2px solid black;
+
+.left li {
+  cursor: pointer;
+  border-bottom: 2px solid black;
 }
+
 .left::-webkit-scrollbar {
-    display: none;
-  }
+  display: none;
+}
 
-  .right_header{
-    background-color: rgb(65, 158, 188);
-    height:8vh;
-    display: grid;
-    grid-template-columns:15% 70% 15%;
-  }
-  .searchContainer{
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    width:80%;
-    height:100%;
-  }
-  .searchIcon{
-    background-color: blue;
-    color:white;
-    width:20px;
-    padding:5px;
-    cursor: pointer;
-    margin-left: 5px;
-    display: inline;
-  }
-  .search{
-    font-size:0.8rem;
-    padding:5px;
-  }
-  .invite{
-    background-color:rgb(188, 37, 37);
-    color:white;
-    cursor:pointer;
-    padding:5px;
-    font-size: 1rem;
-    height:60%;
-    width:150px;
-    border:none;
-    border-radius: 10px;
-  }
-  .inviteContainer,.sendContainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.right_header {
+  background-color: rgb(65, 158, 188);
+  height: 8vh;
+  display: grid;
+  grid-template-columns: 15% 70% 15%;
+}
 
-  .groupHeading{
-    color:white;
-    background-color: rgb(27, 111, 27);
-    height: 8vh;
-    text-align: center;
-  }
-  .rightList{
-    display: flex;
-    width:100%;
-    flex-direction: column-reverse;
-    overflow: scroll;
-    background-color:whitesmoke ;
-    height:85vh;
-  }
-  .rightList::-webkit-scrollbar {
-    display: none;
-  }
-  .msgContainer{
-    height:7vh;
-    display: grid;
-    grid-template-columns: 88% 12%;
-  }
-  .msgBox{
-    padding: 10%;
-  }
-  .messageInput{
-    height:100%;
-    border:2px solid black;
-    width:100%;
-    font-size: 1.5rem;
-  }
-  .send{
-    background-color:rgb(188, 37, 37);
-    color:white;
-    cursor:pointer;
-    padding:5px;
-    font-size: 1rem;
-    height:60%;
-    width:100px;
-    border:none;
-    border-radius: 10px;
-  }
-  .listItem{
-    height:auto;
-    width:95%;
-    border:0.5px solid black;
-    margin:5px;
-    padding:2px;
-    font-size: 1.2rem;
-    overflow-wrap:break-word;
-  }
-  
-  .listItem h3{
-       color:green;
-  }
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 100%;
+}
 
-  .msgTime{
-    float: right;
-    font-size:18px;
-  }
-  .nodata{
-    color:red;
-  }
+.searchIcon {
+  background-color: blue;
+  color: white;
+  width: 20px;
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+  display: inline;
+}
+
+.search {
+  font-size: 0.8rem;
+  padding: 5px;
+}
+
+.invite {
+  background-color: rgb(188, 37, 37);
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 1rem;
+  height: 60%;
+  width: 150px;
+  border: none;
+  border-radius: 10px;
+}
+
+.inviteContainer,
+.sendContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.groupHeading {
+  color: white;
+  background-color: rgb(27, 111, 27);
+  height: 8vh;
+  text-align: center;
+}
+
+.rightList {
+  display: flex;
+  width: 100%;
+  flex-direction: column-reverse;
+  overflow: scroll;
+  background-color: whitesmoke;
+  height: 85vh;
+}
+
+.rightList::-webkit-scrollbar {
+  display: none;
+}
+
+.msgContainer {
+  height: 7vh;
+  display: grid;
+  grid-template-columns: 88% 12%;
+}
+
+.msgBox {
+  padding: 10%;
+}
+
+.messageInput {
+  height: 100%;
+  border: 2px solid black;
+  width: 100%;
+  font-size: 1.5rem;
+}
+
+.send {
+  background-color: rgb(188, 37, 37);
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 1rem;
+  height: 60%;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+}
+
+.listItem {
+  height: auto;
+  width: 95%;
+  border: 0.5px solid black;
+  margin: 5px;
+  padding: 2px;
+  font-size: 1.2rem;
+  overflow-wrap: break-word;
+}
+
+.listItem h3 {
+  color: green;
+}
+
+.msgTime {
+  float: right;
+  font-size: 18px;
+}
+
+.nodata {
+  color: red;
+}
+
+.highlight {
+  font-weight: bold;
+}

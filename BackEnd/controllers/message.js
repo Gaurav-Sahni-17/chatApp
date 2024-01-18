@@ -16,9 +16,8 @@ function sendMessage(req,res){
 }
 
 function getGroupChats(req,res){
-    const {groupId,start}=req.body;
-    console.log(req.body);
-    db.query(`SELECT user_id,username,content,DATE_FORMAT(msgTime,"%d/%m/%Y") as date,TIME_FORMAT(msgTime,"%H:%i") as time from messages join user on user_id=id where group_id=? order by msgTime desc limit ?,10 `,[groupId,start], (err, result) => {
+    const {groupId,start,count}=req.body;
+    db.query(`SELECT user_id,username,content,DATE_FORMAT(msgTime,"%d/%m/%Y") as date,TIME_FORMAT(msgTime,"%H:%i") as time from messages join user on user_id=id where group_id=? order by msgTime desc limit ?,? `,[groupId,start,count], (err, result) => {
        if(err){
         res.status(400).end();
        } 
