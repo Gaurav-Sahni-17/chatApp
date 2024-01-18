@@ -9,23 +9,23 @@ export default function Login() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-                fetch("http://localhost:3000/checkuser", {
-                    headers: {
-                        token: token,
-                    }
-                }).then((res) => {
-                    if (res.status === 401) {
-                        localStorage.removeItem("token");
-                    }
-                    return res.json();
-                }).then(() => {
-                    navigate("/chat");
-                }).catch((err) => {
-                    swal.fire({
-                    title:"Something Went Wrong",
-                    icon:"error"
-                    });
-                })
+            fetch("http://localhost:3000/checkuser", {
+                headers: {
+                    token: token,
+                }
+            }).then((res) => {
+                if (res.status === 401) {
+                    localStorage.removeItem("token");
+                }
+                return res.json();
+            }).then(() => {
+                navigate("/chat");
+            }).catch((err) => {
+                swal.fire({
+                    title: "Something Went Wrong",
+                    icon: "error"
+                });
+            })
         }
     }, [])
     function changeData(value) {
@@ -40,7 +40,7 @@ export default function Login() {
                     if (data === "login") {
                         navigate("/chat");
                     }
-                    else if (data==="mailverify"){
+                    else if (data === "mailverify") {
                         navigate("/mailverify");
                     }
                 }).catch((err) => {

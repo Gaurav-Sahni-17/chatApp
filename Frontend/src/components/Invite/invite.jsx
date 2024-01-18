@@ -7,9 +7,9 @@ import Logout from "../../controllers/logout/logout.js"
 import inviteFriend from "../../controllers/group/invitefriend.js";
 export default function Chat() {
     const [user, Setuser] = useState({});
-    const [open,setOpen]=useState(false);
+    const [open, setOpen] = useState(false);
     const [userdetails, setUserDetails] = useState([]);
-    const {id}=useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -37,22 +37,22 @@ export default function Chat() {
                 headers: {
                     "content-type": "application/json"
                 },
-                body: JSON.stringify({id:id })
+                body: JSON.stringify({ id: id })
             }).then((res) => {
                 return res.json();
             })
                 .then((data) => {
                     setUserDetails(data);
-                }).catch(()=>{
+                }).catch(() => {
                     swal.fire({
-                        title:"Something Went Wrong",
-                        icon:"error"
-                    }).then(()=>{
+                        title: "Something Went Wrong",
+                        icon: "error"
+                    }).then(() => {
                         navigate("/login");
+                    })
                 })
-                })
-            }
-        },[user.username])
+        }
+    }, [user.username])
     function handleOpen() {
         setOpen(!open);
     }
@@ -66,30 +66,30 @@ export default function Chat() {
             })
         })
     }
-    function goBack(){
+    function goBack() {
         navigate("/chat");
     }
     function changePassword() {
         navigate("/changepass");
     }
-    function sendInvite(element){
-        return function(){
-            inviteFriend({userId:element.id,groupId:id,email:element.email,username:user.username})
-            .then(()=>{
-                swal.fire({
-                    title:"Invite send successfully",
-                    icon:"success"
-                }).then(()=>{
-                    setUserDetails(userdetails.filter((data)=>{
-                        return data.id!=element.id;
-                    }))
+    function sendInvite(element) {
+        return function () {
+            inviteFriend({ userId: element.id, groupId: id, email: element.email, username: user.username })
+                .then(() => {
+                    swal.fire({
+                        title: "Invite send successfully",
+                        icon: "success"
+                    }).then(() => {
+                        setUserDetails(userdetails.filter((data) => {
+                            return data.id != element.id;
+                        }))
+                    })
+                }).catch((err) => {
+                    swal.fire({
+                        title: err,
+                        icon: "error"
+                    })
                 })
-            }).catch((err)=>{
-                swal.fire({
-                    title:err,
-                    icon:"error"
-                })
-            })
         }
     }
     return (
@@ -135,6 +135,6 @@ export default function Chat() {
                         <tr className={styles.cell} style={{ "color": "red", "font-size": "1.5rem" }}>No Friends to Invite</tr>
                 }
             </table>
-            </>
+        </>
     )
 }

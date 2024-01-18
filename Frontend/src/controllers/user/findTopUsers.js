@@ -5,14 +5,14 @@ export default function findTopUsers(data) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         }).then((res) => {
-            if(res.status==200){
+            if (res.status == 200) {
                 return res.json();
             }
-            else{
+            else {
                 reject("Something Went Wrong");
             }
-        }).then((data)=>{
-                resolve(data);
+        }).then((data) => {
+            resolve(data);
         }).catch((err) => {
             reject("Something Went Wrong");
         })

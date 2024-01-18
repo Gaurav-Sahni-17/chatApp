@@ -8,7 +8,7 @@ export default function inviteFriend(data) {
             if (res.status === 200) {
                 resolve();
             }
-            else{
+            else {
                 reject("Something Went Wrong");
             }
         }).catch((err) => {

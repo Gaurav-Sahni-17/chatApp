@@ -5,7 +5,7 @@ import signupuser from "../../controllers/user/signupuser";
 import swal from "sweetalert2";
 export default function Signup() {
     const navigate = useNavigate();
-    const [data, setData] = useState({ username: "", password: "", email: "" ,region:""})
+    const [data, setData] = useState({ username: "", password: "", email: "", region: "" })
     function changeData(value) {
         return function (e) {
             setData({ ...data, [value]: e.target.value });
@@ -26,14 +26,14 @@ export default function Signup() {
             }
             else {
                 swal.fire({
-                    title:"Password too weak",
+                    title: "Password too weak",
                     icon: "error"
                 })
             }
         }
         else {
             swal.fire({
-                title:"Please fill all details",
+                title: "Please fill all details",
                 icon: "error"
             })
         }
