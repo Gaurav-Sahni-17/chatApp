@@ -22,7 +22,7 @@ function creategroup(req, res) {
 
 function getusergroups(req, res) {
     const { id } = req.body;
-    db.query("SELECT t1.group_id,t1.group_name,t1.description,COALESCE(t2.quantity,0) as messagecount from ((SELECT group_id,group_name,description from groupdetails where group_id in (SELECT group_id from members WHERE user_id=?)) as t1 left join (SELECT group_id,count(user_id) as quantity from messages where user_id=? group by group_id) as t2 on t1.group_id=t2.group_id)order by messagecount desc", [id, id], (err, result) => {
+    db.query("SELECT t1.group_id,t1.group_name,t1.description,COALESCE(t2.quantity,0) as messagecount from ((SELECT group_id,group_name,description from groupdetails where group_id in (SELECT group_id from members WHERE user_id=?)) as t1 left join (SELECT group_id,count(user_id) as quantity from messages where user_id=? group by group_id) as t2 on t1.group_id=t2.group_id) order by messagecount desc", [id, id], (err, result) => {
         if (!err) {
             res.send(JSON.stringify(result));
         }
