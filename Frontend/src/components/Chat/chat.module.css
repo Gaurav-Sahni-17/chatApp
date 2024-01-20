@@ -57,7 +57,7 @@
 
 .outer {
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 30% 70%;
 }
 
 .left {
@@ -130,7 +130,8 @@
   color: white;
   background-color: rgb(27, 111, 27);
   height: 8vh;
-  text-align: center;
+  display: grid;
+  place-items: center;
 }
 
 .rightList {
@@ -140,16 +141,16 @@
   overflow: scroll;
   background-color: whitesmoke;
   height: 85vh;
+  background-color: rgb(236, 238, 226);
 }
 
-.rightList::-webkit-scrollbar {
-  display: none;
-}
 
 .msgContainer {
   height: 7vh;
   display: grid;
   grid-template-columns: 88% 12%;
+  margin-bottom:20px;
+  background-color: rgb(236, 238, 226);
 }
 
 .msgBox {
@@ -157,10 +158,12 @@
 }
 
 .messageInput {
-  height: 100%;
   border: 2px solid black;
-  width: 100%;
+  width: 90%;
+  border-radius: 10px;
+  padding:10px;
   font-size: 1.5rem;
+  margin-left:5%;
 }
 
 .send {
@@ -177,11 +180,14 @@
 
 .listItem {
   height: auto;
-  width: 95%;
+  width: 75%;
   border: 0.5px solid black;
-  margin: 5px;
-  padding: 2px;
+  margin: 10px auto;
+  list-style-type: none;
+  padding: 15px;
   font-size: 1.2rem;
+  border-radius: 15px;
+  background-color: #f1f1f1;
   overflow-wrap: break-word;
 }
 

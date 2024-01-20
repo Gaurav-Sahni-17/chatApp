@@ -34,6 +34,9 @@ export default function Chat() {
                 navigate("/login");
             })
         }
+        else{
+            navigate("/login");
+        }
     }, [])
     function handleOpen() {
         setOpen(!open);

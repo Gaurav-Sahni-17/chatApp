@@ -40,6 +40,9 @@ export default function Chat() {
                 navigate("/login");
             })
         }
+        else{
+            navigate("/login");
+        }
     }, [])
     useEffect(() => {
         if (user.username) {
@@ -73,8 +76,8 @@ export default function Chat() {
     }
     function fetchMoreData(e) {
         let a = e.target.scrollHeight, b = e.target.clientHeight;
-        console.log(a, b);
-        if ((-(e.target.scrollTop.toFixed()) === (a - b)) && HasMore) {
+        console.log(a, b,e.target.scrollTop.toFixed());
+        if ((-(e.target.scrollTop.toFixed())> (a - b-5)) && HasMore) {
             getGroupChats({ groupId: selectedGroup.group_id, start: start, count: 5 })
                 .then((data) => {
                     console.log(data);

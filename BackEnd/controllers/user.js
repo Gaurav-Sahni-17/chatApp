@@ -52,7 +52,9 @@ async function postlogin(req, res) {
                     const pass = user.password;
                     const passwordverify = await bcrypt.compare(password, pass);
                     if (passwordverify) {
-                        const token = jwt.sign({ id }, "MySecretKey");
+                        const token = jwt.sign({ id }, "MySecretKey",{
+                            expiresIn:"1800s"
+                        });
                         res.status(200).send(JSON.stringify(token));
                     }
                     else {
