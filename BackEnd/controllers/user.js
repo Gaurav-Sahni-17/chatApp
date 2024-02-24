@@ -73,16 +73,24 @@ async function postlogin(req, res) {
 }
 
 function invitefriend(req, res) {
-    const { userId, groupId, email, username } = req.body;
-    let text = 'Enjoy chatting with our application with your friends and family.';
-    let subject = 'Invitation';
-    let html = `<h1>${username} has invited you to join his chatting group.</h1><h3>Click below to join</h3><a href='http://127.0.0.1:3000/join/${groupId}/${userId}'>Click Here</a>`;
-    sendMail(email, subject, text, html, function (err, data) {
-        if (!err) {
-            res.status(200).end();
+    const { userId, groupId, email, username,sender } = req.body;
+    db.query("Select * from members where user_id=? and group_id=?",[sender,groupId],(err,result)=>{
+        if(result.length)
+        {
+            let text = 'Enjoy chatting with our application with your friends and family.';
+            let subject = 'Invitation';
+            let html = `<h1>${username} has invited you to join his chatting group.</h1><h3>Click below to join</h3><a href='http://127.0.0.1:3000/join/${groupId}/${userId}'>Click Here</a>`;
+            sendMail(email, subject, text, html, function (err, data) {
+                if (!err) {
+                    res.status(200).end();
+                }
+                else {
+                    res.status(400).end();
+                }
+            })
         }
-        else {
-            res.status(400).end();
+        else{
+            res.status(402).end();
         }
     })
 }

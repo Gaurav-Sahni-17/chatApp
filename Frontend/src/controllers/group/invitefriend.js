@@ -8,6 +8,9 @@ export default function inviteFriend(data) {
             if (res.status === 200) {
                 resolve();
             }
+            else if(res.status===402){
+                reject("Be in your Limits.");
+            }
             else {
                 reject("Something Went Wrong");
             }

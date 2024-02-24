@@ -77,7 +77,7 @@ export default function Chat() {
     }
     function sendInvite(element) {
         return function () {
-            inviteFriend({ userId: element.id, groupId: id, email: element.email, username: user.username })
+            inviteFriend({ userId: element.id, groupId: id, email: element.email, username: user.username ,sender:user.id})
                 .then(() => {
                     swal.fire({
                         title: "Invite send successfully",
@@ -91,6 +91,8 @@ export default function Chat() {
                     swal.fire({
                         title: err,
                         icon: "error"
+                    }).then(()=>{
+                        navigate("/chat");
                     })
                 })
         }

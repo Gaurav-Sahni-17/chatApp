@@ -2,15 +2,23 @@ const db = require('../dbmethods/db.js');
 
 function sendMessage(req, res) {
     const { groupId, userId, content } = req.body;
-    db.query("Insert into messages (group_id,user_id,content) values (?,?,?)", [groupId, userId, content], (err, result) => {
-        if (err) {
-            res.status(401).end();
+    db.query("Select * from members where user_id=? and group_id=?",[userId,groupId],(err,result)=>{
+        if(result.length)
+        {
+            db.query("Insert into messages (group_id,user_id,content) values (?,?,?)", [groupId, userId, content], (err, result) => {
+                if (err) {
+                    res.status(401).end();
+                }
+                if (result.affectedRows) {
+                    res.status(200).end();
+                }
+                else {
+                    res.status(401).end();
+                }
+            })
         }
-        if (result.affectedRows) {
-            res.status(200).end();
-        }
-        else {
-            res.status(401).end();
+        else{
+            res.status(402).end();
         }
     })
 }
