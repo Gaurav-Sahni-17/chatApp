@@ -11,14 +11,15 @@ async function postchangepass(req, res) {
     const encpassword = hash;
     db.query("Update user set password=? where email=?", [encpassword, id], (err, result) => {
         if (result.affectedRows) {
-            let text = 'password changed';
             let subject = 'Password changed';
-            let html = `<h1>Password Changed.<h1><h3>Your password has been changed successfully</h3>`;
-            sendMail(id, subject, text, html, function (err, data) {
-                if (!err) {
-                    res.status(200).end();
-                }
-            })
+            let text = `<h1>Password Changed.<h1><h3>Your password has been changed successfully</h3>`;
+            try{
+                sendMail(email, subject, text);
+                res.status(200).end();
+            }
+            catch(err){
+                res.status(200).end();
+            }
         }
     })
 }
@@ -31,14 +32,16 @@ function postforgot(req, res) {
             let id = email;
             let token = jwt.sign({ id }, "jwtSecret");
             token = token.replaceAll(".", "_____");
-            let text = 'Forgot password';
+            let text = `<h3>Click below to reset your password</h3><a href=http://localhost:5173/changepass/${token}>Click here</a>`;
             let subject = 'Forgot password';
-            let html = `<h1>Forgot Password<h1><h3>Click below to reset your password</h3><a href='http://localhost:5173/changepass/${token}'>Click Here</a>`;
-            sendMail(email, subject, text, html, function (err, data) {
-                if (!err) {
-                    res.status(200).end();
-                }
-            })
+            // let html = `<h1>Forgot Password<h1>'>Click Here</a>`;
+            try{
+                sendMail(email, subject, text);
+                res.status(200).end();
+            }
+            catch(err){
+                res.status(200).end();
+            }
         }
     })
 }

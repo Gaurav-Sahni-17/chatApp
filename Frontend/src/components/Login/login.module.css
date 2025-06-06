@@ -1,99 +1,198 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .outer {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.outer::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(0, 123, 255, 0.05);
+    border-radius: 50%;
+    top: -50px;
+    left: -50px;
+}
+
+.outer::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(40, 167, 69, 0.05);
+    border-radius: 50%;
+    bottom: -30px;
+    right: -30px;
 }
 
 .h1 {
     margin: 0;
     color: white;
-    font-size: 50px;
+    font-size: 2.8rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150px;
-    background-color: green;
+    height: 180px;
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
 }
 
 .p {
-    color: red;
-    margin-top: 5px;
+    color: #dc3545;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: 500;
 }
 
 .home {
-    height: 40px;
-    width: 75px;
-    margin-top: 10px;
+    height: 45px;
+    width: 100px;
     position: absolute;
-    top: 20px;
-    right: 30px;
+    top: 25px;
+    right: 40px;
     border: none;
     text-decoration: none;
-    background-color: blue;
+    background: linear-gradient(to right, #007bff, #0056b3);
     color: white;
     cursor: pointer;
+    border-radius: 25px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to right, #0056b3, #007bff);
 }
 
 .container {
     background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 300px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 380px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
 }
 
 .container h2 {
     text-align: center;
-    color: #333;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
 .formgroup {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    position: relative;
 }
 
 .formgroup label {
-    font-weight: bold;
+    font-weight: 600;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    color: #495057;
+    font-size: 0.95rem;
 }
 
 .formgroup input {
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+.formgroup input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    outline: none;
+    background-color: #fff;
 }
 
 .loginacc {
     display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    justify-content: space-evenly;
+    margin-top: 15px;
+}
+
+.loginacc a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.loginacc a:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }
 
 .form {
-    height: 350px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-}
-
-.loginacc Link {
-    color: #333;
+    gap: 20px;
 }
 
 .btncontainer {
     text-align: center;
+    margin-top: 15px;
 }
 
 .btncontainer button {
-    padding: 10px 20px;
+    padding: 12px 30px;
     margin-top: 10px;
-    background-color: #007bff;
+    background: linear-gradient(to right, #007bff, #0056b3);
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+    width: 100%;
+}
+
+.btncontainer button:hover {
+    background: linear-gradient(to right, #0056b3, #007bff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+.btncontainer button:active {
+    transform: translateY(0);
 }

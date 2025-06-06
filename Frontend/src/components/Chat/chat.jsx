@@ -293,7 +293,7 @@ export default function Chat() {
                                 {
                                     groupMsg.map((element) => {
                                         return (
-                                            <li className={styles.listItem}>
+                                            <li className={`${styles.listItem} ${element.user_id === user.id ?`${styles.mine}`:`${styles.others}`}`}>
                                                 <p className={styles.msgTime}>{element.date + "  " + element.time}</p>
                                                 {
                                                     element.user_id === user.id ?

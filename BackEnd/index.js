@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const cookiParser=require("cookie-parser")
+const cookieParser=require("cookie-parser")
 const jwt = require('jsonwebtoken');
 const db = require("./dbmethods/db.js")
 const { postchangepass, postforgot } = require("./controllers/passwordmanagement.js");
@@ -11,7 +11,7 @@ const {sendMessage, getGroupChats}=require('./controllers/message.js');
 const { topregions } = require('./controllers/region.js');
 const app = express();
 app.use(express.json())
-app.use(cookiParser());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 const verifyJWT = (req, res, next) => {

@@ -20,19 +20,26 @@ function postsignup(req, res) {
             const salt = await bcrypt.genSalt(saltRounds);
             const hash = await bcrypt.hash(password, salt);
             const encpassword = hash;
-            db.query("Insert into user (username,email,password,id,region) values (?,?,?,?,?)", [username, email, encpassword, id, region], (err, result, fields) => {
-                if (result.affectedRows) {
-                    let token = id;
-                    let text = 'Enjoy chatting with our application with your friends and family.';
-                    let subject = 'verification';
-                    let html = `<h1>Verify quickly and start your chatting journey.<h1><h3>Click below to verify</h3><a href='http://127.0.0.1:3000/verifymail/${token}'>Click Here</a>`;
-                    sendMail(req.body.email, subject, text, html, function (err, data) {
-                        if (!err) {
-                            res.status(200).end();
-                        }
+            try{
+                let token = id;
+                // let text = 'Enjoy chatting with our application with your friends and family.';
+                let subject = 'verification';
+                const text = `Click on the link below to verify your email:\nhttp://127.0.0.1:3000/verifymail/${token}`;
+                sendMail(req.body.email, subject, text);
+                db.query("Insert into user (username,email,password,id,region) values (?,?,?,?,?)", [username, email, encpassword, id, region], (err, result, fields) => {
+                    if (result.affectedRows) {
+                    res.status(201).end();
+                    // let html = `<h1>Verify quickly and start your chatting journey.<h1><h3>Click below to verify</h3><a href='http://127.0.0.1:3000/verifymail/${token}'>Click Here</a>`;
+                    }
+                    else{
+                        res.status(400).end();  
+                    }
                     })
                 }
-            })
+            catch(err){
+             console.log(err);
+             res.status(500).end();
+            }
         }
     })
 }
@@ -77,17 +84,16 @@ function invitefriend(req, res) {
     db.query("Select * from members where user_id=? and group_id=?",[sender,groupId],(err,result)=>{
         if(result.length)
         {
-            let text = 'Enjoy chatting with our application with your friends and family.';
+            let text = `${username} has invited you to join his chatting group.\nClick below to join\n<a href=http://127.0.0.1:3000/join/${groupId}/${userId}>Click Here</a>`;
             let subject = 'Invitation';
-            let html = `<h1>${username} has invited you to join his chatting group.</h1><h3>Click below to join</h3><a href='http://127.0.0.1:3000/join/${groupId}/${userId}'>Click Here</a>`;
-            sendMail(email, subject, text, html, function (err, data) {
-                if (!err) {
-                    res.status(200).end();
-                }
-                else {
-                    res.status(400).end();
-                }
-            })
+            let html = `<h1></h1><h3>'>Click Here</a>`;
+            try{
+                sendMail(email, subject, text);
+                res.status(200).end();
+            }
+            catch(err){
+                res.status(400).end();
+            }
         }
         else{
             res.status(402).end();
